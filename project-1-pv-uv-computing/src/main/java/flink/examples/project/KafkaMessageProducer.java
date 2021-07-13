@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import com.alibaba.fastjson.JSONObject;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -48,5 +51,15 @@ public class KafkaMessageProducer {
             .append("Z");
         String[] action = {"click", "bug", "login", "logout"};
         String[] category = {"c1", "c2", "c3", "c4"};
+
+        UserBehaviorEvent userBehaviorEvent = new UserBehaviorEvent();
+        userBehaviorEvent.setUserId(new Random().nextInt(10000));
+        userBehaviorEvent.setItemId(new Random().nextInt(10000));
+        userBehaviorEvent.setCategory(category[new Random().nextInt(category.length)]);
+        userBehaviorEvent.setAction(action[new Random().nextInt(action.length)]);
+        userBehaviorEvent.setTs(System.currentTimeMillis());
+
+        String str = JSONObject.toJSONString(userBehaviorEvent);
+        return str;
     }
 }
