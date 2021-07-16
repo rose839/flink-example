@@ -1,6 +1,9 @@
 package flink.examples.project;
 
+import java.io.IOException;
+
 import com.alibaba.fastjson.JSON;
+
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;

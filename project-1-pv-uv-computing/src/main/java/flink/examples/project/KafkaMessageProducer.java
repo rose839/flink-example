@@ -20,8 +20,8 @@ public class KafkaMessageProducer {
     public static void main(String[] args) {
         Map<String, Object> kafkaParam = new HashMap<>(3);
         String topic = args.length == 0 ? Constants.TOPIC : args[0];
-        System.out.println("produce-topic" + topic);
-        kafkaParam.put("bootstrap.servers", Constants.KAFKA_BOOTSTRAP_SERVERS_KEY);
+        System.out.println("produce-topic: " + topic);
+        kafkaParam.put("bootstrap.servers", Constants.KAFKA_BOOTSTRAP_SERVER);
         kafkaParam.put("key.serializer", StringSerializer.class.getName());
         kafkaParam.put("value.serializer", StringSerializer.class.getName());
     
@@ -29,6 +29,7 @@ public class KafkaMessageProducer {
         int index = 0;
         while (index < 100000) {
             String msg = genMessage();
+            System.out.println(msg);
             ProducerRecord<String, String> record = new ProducerRecord<>(topic, msg);
             kafkaProducer.send(record);
             try {
@@ -53,8 +54,8 @@ public class KafkaMessageProducer {
         String[] category = {"c1", "c2", "c3", "c4"};
 
         UserBehaviorEvent userBehaviorEvent = new UserBehaviorEvent();
-        userBehaviorEvent.setUserId(new Random().nextInt(10000));
-        userBehaviorEvent.setItemId(new Random().nextInt(10000));
+        userBehaviorEvent.setUserID(new Random().nextInt(10000));
+        userBehaviorEvent.setItemID(new Random().nextInt(10000));
         userBehaviorEvent.setCategory(category[new Random().nextInt(category.length)]);
         userBehaviorEvent.setAction(action[new Random().nextInt(action.length)]);
         userBehaviorEvent.setTs(System.currentTimeMillis());
