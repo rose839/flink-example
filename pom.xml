@@ -15,6 +15,7 @@
     </properties>
     <modules>
         <module>project-1-pv-uv-computing</module>
+        <module>datastream-api</module>
     </modules>
 
 </project>
