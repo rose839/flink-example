@@ -16,6 +16,7 @@
     <modules>
         <module>project-1-pv-uv-computing</module>
         <module>datastream-api</module>
+        <module>stateful-compute</module>
     </modules>
 
 </project>

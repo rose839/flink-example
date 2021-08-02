@@ -35,5 +35,4 @@ public class PojosClass {
             return new Tuple2<T, Long>(value, 1L);
         }
     }
-
 }
