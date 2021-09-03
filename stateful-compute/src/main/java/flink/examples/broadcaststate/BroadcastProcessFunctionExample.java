@@ -21,17 +21,18 @@ public class BroadcastProcessFunctionExample {
             "broadcast-state", BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO);
 
         final Map<Long, String> expected = new HashMap<>();
-        expected.put(0L, "test:0");
-        expected.put(1L, "test:1");
-        expected.put(2L, "test:2");
-        expected.put(3L, "test:3");
-        expected.put(4L, "test:4");
-        expected.put(5L, "test:5");
+        expected.put(0L, "test:100001");
+        expected.put(1L, "test:100002");
+        expected.put(2L, "test:100003");
+        expected.put(3L, "test:100004");
+        expected.put(4L, "test:100005");
+        expected.put(5L, "test:100006");
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+        env.setParallelism(1);
 
-        final DataStream<Long> srcOne = env.generateSequence(6L, 10L)
+        final DataStream<Long> srcOne = env.generateSequence(600006L, 600010L)
             .assignTimestampsAndWatermarks(
                 WatermarkStrategy.
                     <Long>forBoundedOutOfOrderness(Duration.ofSeconds(5)).
@@ -83,6 +84,7 @@ public class BroadcastProcessFunctionExample {
         @Override
         public void processBroadcastElement(String value, BroadcastProcessFunction<Long, String, String>.Context ctx,
                 Collector<String> out) throws Exception {
+            System.out.println("broadcast value: "+ value);
             long key = Long.parseLong(value.split(":")[1]);
             ctx.getBroadcastState(descriptor).put(key, value);
         }
